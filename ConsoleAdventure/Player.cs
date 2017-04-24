@@ -15,6 +15,7 @@ namespace ConsoleAdventure
         private int health;
         private int money;
         private int points;
+        public double progress;
 
 
         public Weapon selectedWeapon;
@@ -183,7 +184,7 @@ namespace ConsoleAdventure
                             Console.WriteLine("Non-numerical value entered.");
                             break;
                         }
-                        selectedWeapon.AddAmmo(ammoAdd);
+                        selectedWeapon.AddAmmo(playerInventory, ammoAdd);
                         Console.WriteLine("Press enter to continue...");
                         Console.ReadLine();
                     }
@@ -224,13 +225,17 @@ namespace ConsoleAdventure
         }
         public int GetBattleNumber()
         {
+            double num;
+            progress = (progress / 10);
             Random rand = new Random(DateTime.Now.Second);
-            double num = rand.Next(0, 99);
-            num = Math.Round(Math.Sqrt(num));
-            if (num == 10)
-                num = 9;
+            num = 9- rand.Next(0, (int)Math.Round(progress)+1);         
+            
+            
+            
             return (int)num;
+
         }
+
         public void SetPoints(int points)
         {
             this.points = points;
@@ -246,6 +251,26 @@ namespace ConsoleAdventure
         public int GetHealth()
         {
             return health;
+        }
+        public void UpdateProgress(Inventory i, Enemy[] enemy)
+        {
+            double progress = 0;
+            int cycle = 1;
+            for (int k = enemy.Length - 1; k > -1; k--)
+            {
+
+                if (enemy[k].KilledOnce())
+                {
+                    progress++;
+                }
+                
+                cycle++;
+
+
+            }
+            progress += i.UpdateProgressInvetory();
+            progress = (progress / 16.0) * 100.0;
+            this.progress = progress;
         }
         public void CheckProgress(Inventory i, Enemy[] enemy)
         {
@@ -273,6 +298,7 @@ namespace ConsoleAdventure
             }
             progress += i.CheckProgressInvetory();
             progress = (progress / 16.0) * 100.0;
+            this.progress = progress;
             Console.WriteLine("_____ GAME PROGRESS : {0}% _____", progress);
             Console.WriteLine();
         }
@@ -317,6 +343,7 @@ namespace ConsoleAdventure
                         {
                             file.WriteLine(t);
                         }
+                        file.Write("ConsoleAdventure666");
                         Console.WriteLine("Game saved to local directory.");
                         file.Close();
                         break;
@@ -333,7 +360,9 @@ namespace ConsoleAdventure
                 {
                     file.WriteLine(t);
                 }
-                
+                file.Write("ConsoleAdventure666");
+                Console.WriteLine("Game saved to local directory.");
+
                 file.Close();
             }
 
@@ -353,37 +382,50 @@ namespace ConsoleAdventure
             {
                 System.IO.StreamReader file = new System.IO.StreamReader(directory);
                 data = System.IO.File.ReadAllLines(directory).ToList();
-
-
-                //Player info
-                SetName(data[0]);
-                SetHealth(int.Parse(data[1]));
-                selectedWeapon.SetWeaponName(data[2]);
-                SetPoints(int.Parse(data[3]));
-                //Inventory info
-                playerInventory.money.SetAmount(int.Parse(data[4]));
-                playerInventory.ammo.SetAmount(int.Parse(data[5]));
-                playerInventory.health.SetAmount(int.Parse(data[6]));
-
-                //Weapon info
-                i.fork.LoadInfo(data[7], data[8], data[9]);
-                i.antler.LoadInfo(data[10], data[11], data[12]);
-                i.poisonSpear.LoadInfo(data[13], data[14], data[15]);
-                i.toxicSludgePistol.LoadInfo(data[16], data[17], data[18]);
-                i.guttingMachine.LoadInfo(data[19], data[20], data[21]);
-                i.battleshipCannon.LoadInfo(data[22], data[23], data[24]);
-                Equip(selectedWeapon.GetWeaponName());
-                //Enemy info
-                int j = 25;
-                for (int k = 0; k < 10; k++)
+                if(data.Count!=56)
                 {
-                    enemy[k].LoadData(data[j], data[j + 1], data[j + 2]);
-                    j += 3;
+                    Console.WriteLine("Load file corrupt. Aborted");
+                }
+                else if(data[55] != "ConsoleAdventure666")
+                {
+                    Console.WriteLine("Load file corrupt. Aborted");
+                }
+                else
+                {
+                    Console.WriteLine(data.Count);
+                    //Player info
+                    SetName(data[0]);
+                    SetHealth(int.Parse(data[1]));
+                    selectedWeapon.SetWeaponName(data[2]);
+                    SetPoints(int.Parse(data[3]));
+                    //Inventory info
+                    playerInventory.money.SetAmount(int.Parse(data[4]));
+                    playerInventory.ammo.SetAmount(int.Parse(data[5]));
+                    playerInventory.health.SetAmount(int.Parse(data[6]));
+
+                    //Weapon info
+                    i.fork.LoadInfo(data[7], data[8], data[9]);
+                    i.antler.LoadInfo(data[10], data[11], data[12]);
+                    i.poisonSpear.LoadInfo(data[13], data[14], data[15]);
+                    i.toxicSludgePistol.LoadInfo(data[16], data[17], data[18]);
+                    i.guttingMachine.LoadInfo(data[19], data[20], data[21]);
+                    i.battleshipCannon.LoadInfo(data[22], data[23], data[24]);
+                    Equip(selectedWeapon.GetWeaponName());
+                    //Enemy info
+                    int j = 25;
+                    for (int k = 0; k < 10; k++)
+                    {
+                        enemy[k].LoadData(data[j], data[j + 1], data[j + 2]);
+                        j += 3;
+                    }
+
+                    file.Close();
+                    Console.WriteLine("_____ Game Loaded _____");
+                    ViewPlayerStats();
                 }
 
-                file.Close();
-                Console.WriteLine("_____ Game Loaded _____");
-                ViewPlayerStats();
+
+                
             }
             
         }

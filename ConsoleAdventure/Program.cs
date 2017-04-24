@@ -26,12 +26,12 @@ namespace ConsoleAdventure
             enemies[8] = new Enemy("Burger With Legs", 10, 5);
             enemies[7] = new Enemy("Highly Energetic Spade", 20, 10);
             enemies[6] = new Enemy("Failed Gang Member", 30, 20);
-            enemies[5] = new Enemy("Deadly Nettle Cluster", 40, 30);
-            enemies[4] = new Enemy("Doom Turnip", 50, 40);
-            enemies[3] = new Enemy("Angry E.T.", 60, 50);
-            enemies[2] = new Enemy("Bermuda Triangle", 70, 60);
-            enemies[1] = new Enemy("Loneley Panzer Tank", 80, 70);
-            enemies[0] = new Enemy("God On Acid", 90, 80);
+            enemies[5] = new Enemy("Deadly Nettle Cluster", 50, 30);
+            enemies[4] = new Enemy("Doom Turnip", 100, 40);
+            enemies[3] = new Enemy("Angry E.T.", 200, 50);
+            enemies[2] = new Enemy("Bermuda Triangle", 300, 60);
+            enemies[1] = new Enemy("Loneley Panzer Tank", 400, 70);
+            enemies[0] = new Enemy("God On Acid", 500, 80);
 
             
 
@@ -58,7 +58,8 @@ namespace ConsoleAdventure
                         break;
                     case "b":
                     case "battle":
-                        battleNum = player.GetBattleNumber();                        
+                        player.UpdateProgress(player.playerInventory, enemies);
+                        battleNum = player.GetBattleNumber();
                         enemies[battleNum].Create();
                         fighting = true;
                         break;
@@ -93,7 +94,7 @@ namespace ConsoleAdventure
                         player.Equip("antler");
                         break;
                     case "3":
-                    case "equip3":
+                    case "equip 3":
                     case "equip poison spear":
                         player.Equip("poison spear");
                         break;
@@ -188,6 +189,149 @@ namespace ConsoleAdventure
                         Console.Write("Press enter to continue...");
                         Console.ReadLine();
                         break;
+                    case "show cheats":
+                        Console.WriteLine("Bandana: Fill inventory");
+                        Console.WriteLine("Demigod: 99999 Health");
+                        Console.WriteLine("I am the most puny: Add £1000");
+                        break;
+                    case "fight 10":
+                    case "fight10":
+                    case "fight god":
+                    case "fight god on acid":
+                        if(enemies[0].CheckSeenOnce() || enemies[0].KilledOnce())
+                        {
+                            battleNum = 0;
+                            enemies[0].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 9":
+                    case "fight9":
+                    case "fight lonely panzer tank":
+                    case "fight tank":
+                        if (enemies[1].CheckSeenOnce() || enemies[1].KilledOnce())
+                        {
+                            battleNum = 1;
+                            enemies[1].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 8":
+                    case "fight8":
+                    case "fight bermuda triangle":
+                    case "fight triangle":
+                        if (enemies[2].CheckSeenOnce() || enemies[2].KilledOnce())
+                        {
+                            battleNum = 2;
+                            enemies[2].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 7":
+                    case "fight7":
+                    case "fight et":
+                    case "fight e.t.":
+                    case "fight e.t":
+                    case "fight angry et":
+                    case "fight angry e.t.":
+                    case "fight angry e.t":
+                        if (enemies[3].CheckSeenOnce() || enemies[3].KilledOnce())
+                        {
+                            battleNum = 3;
+                            enemies[3].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 6":
+                    case "fight6":
+                    case "fight doom turnip":
+                    case "fight turnip":
+                        if (enemies[4].CheckSeenOnce() || enemies[4].KilledOnce())
+                        {
+                            battleNum = 4;
+                            enemies[4].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 5":
+                    case "fight5":
+                    case "fight deadly nettle cluster":
+                    case "fight nettle":
+                    case "fight nettle cluster":
+                        if (enemies[5].CheckSeenOnce() || enemies[5].KilledOnce())
+                        {
+                            battleNum = 5;
+                            enemies[5].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 4":
+                    case "fight4":
+                    case "fight failed gang member":
+                    case "fight gang member":
+                    case "fight gang":
+                        if (enemies[6].CheckSeenOnce() || enemies[6].KilledOnce())
+                        {
+                            battleNum = 6;
+                            enemies[6].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 3":
+                    case "fight3":
+                    case "fight highly energetic spade":
+                    case "fight energetic spade":
+                    case "fight spade":
+                        if (enemies[7].CheckSeenOnce() || enemies[7].KilledOnce())
+                        {
+                            battleNum = 7;
+                            enemies[7].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 2":
+                    case "fight2":
+                    case "fight burger with legs":
+                    case "fight burger":
+                        if (enemies[8].CheckSeenOnce() || enemies[8].KilledOnce())
+                        {
+                            battleNum = 8;
+                            enemies[8].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
+                    case "fight 1":
+                    case "fight1":
+                    case "fight fruitfly":
+                    case "fight fruit fly":
+                    case "fight fly":
+                        if (enemies[9].CheckSeenOnce() || enemies[9].KilledOnce())
+                        {
+                            battleNum = 9;
+                            enemies[9].Create();
+                            fighting = true;
+                            break;
+                        }
+                        else
+                            break;
                     case "p":
                     case "progress":
                     case "check progress":
@@ -201,6 +345,9 @@ namespace ConsoleAdventure
                         Console.WriteLine("Use health: ----- Use health pill.");
                         Console.WriteLine("Equip X: -------- Equip desired weapon.");
                         Console.WriteLine("                  (Can enter full weapon name or use numbers 1-6)");
+                        Console.WriteLine("Fight X: -------- Fight desired enemy.");
+                        Console.WriteLine("                  (Only possibly once discovered)");
+                        Console.WriteLine("                  (Can enter full enemy name or use numbers 1-10)");
                         Console.WriteLine("Shop: ----------- Enter shop");
                         Console.WriteLine("Add ammo: ------- Add ammo to current weapon.");
                         Console.WriteLine("Player info: ---- View player info.");
@@ -532,12 +679,27 @@ namespace ConsoleAdventure
 
                 while(fighting)
                 {
+                    
 
                     for (int i = 0; i < 10; i++)
                     {
                         if (enemies[i].Exists())
                         {
                             battleNum = i;
+                            if (battleNum ==0)
+                            {
+                                Console.WriteLine("~~*~*~*~~*~*.~.* *.~.*~*~~*~*~*~~");
+                                Console.WriteLine("*~* *~*~~*~._*.*~*.*_.~*~~*~* *~*");
+                                Console.WriteLine("*~*~*~*~~*___*__~__*___*~~*~*~*~*");
+                                Console.WriteLine("~~***~*~~*~___________~*~~*~***~~");
+                                Console.WriteLine("~~*~*~   ________________  ~*~*~~");
+                                Console.WriteLine("*~  ~ GOD!!!! ON!!! ACID!!! ~  ~*");
+                                Console.WriteLine("~~*~*~   ________________  ~*~*~~");
+                                Console.WriteLine("~~* *~*~~*~___________~*~~*~** ~~");
+                                Console.WriteLine("*~*~*~*~~*___*__~__*___*~~*~*~*~*");
+                                Console.WriteLine("*~*~ ~*~~*~._*.*~*.*_.~*~~*~* *~*");
+                                Console.WriteLine("~~*~*~*~~*~*.~.* *.~.*~*~~*~*~*~~");
+                            }
                             Console.WriteLine("_____ A wild {0} is attacking you! _____", enemies[battleNum].GetName());
                             Console.WriteLine("Your health: {0}", player.GetHealth());
                             Console.WriteLine("Equipped weapon: {0}", player.selectedWeapon.GetWeaponName());

@@ -65,7 +65,7 @@ namespace ConsoleAdventure
         {
             selected = true; 
         }
-        public void AddAmmo(int ammo)
+        public void AddAmmo(Inventory i, int ammo)
         {
             if (name == "Fork")
             {
@@ -74,6 +74,7 @@ namespace ConsoleAdventure
             else
             {
                 this.ammo += ammo;
+                i.ammo.SetAmount(i.ammo.GetAmount() - ammo);
                 Console.WriteLine("{0} ammo increased to {1}\n", GetWeaponName(), GetWeaponAmmo());
             }
         }

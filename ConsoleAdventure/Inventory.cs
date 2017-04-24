@@ -62,7 +62,29 @@ namespace ConsoleAdventure
             
         }
 
-        
+        public float UpdateProgressInvetory()
+        {
+
+            float count = 0;
+
+            if (fork.WeaponStatus())
+                count++;
+            if (antler.WeaponStatus())
+                count++;
+            if (poisonSpear.WeaponStatus())
+                count++;
+            if (toxicSludgePistol.WeaponStatus())
+                count++;
+            if (guttingMachine.WeaponStatus())
+                count++;
+            if (battleshipCannon.WeaponStatus())
+                count++;
+
+            return count;
+
+        }
+
+
 
     }
 }
