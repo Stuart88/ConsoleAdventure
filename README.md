@@ -1,4 +1,4 @@
-# ConsoleAdventure
+# Console Adventure
 A text based battle game
 
 This is a basic text-based game, where the user inputs various commands in order to complete battles,
@@ -7,4 +7,4 @@ in the shop, after which point it should be possible to easily defeat all enemie
 ten types of enemy in total. The most difficult enemies are encountered less often on the battlefield.
 Some are extremely rare.
 
-Created over the course of one very long evening. Took maybe 8 hours in total.
+Made in a day.
