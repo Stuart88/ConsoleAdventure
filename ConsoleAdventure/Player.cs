@@ -162,36 +162,28 @@ namespace ConsoleAdventure
                     }
                     break;
                 case "ammo":
-                    if(playerInventory.ammo.GetAmount()<10)
-                        Console.WriteLine("Not enough ammo. At least 10 required.\n");
+                    if ((selectedWeapon.GetWeaponName() != "Toxic Sludge Pistol") && selectedWeapon.GetWeaponName() != "Battleship Cannon")
+                    {
+                        Console.WriteLine("This weapon does not need ammo.\n");
+                        break;
+                    }
                     else
                     {
-                        Console.WriteLine("Add 10 ammo to {0}? (One shot of this weapon requires at least {1} ammo)", selectedWeapon.GetWeaponName(), selectedWeapon.Getpower() );
-                        Console.Write("Decision (Y/N): ");
+                        int ammoAdd = 0;
+                        Console.WriteLine("How much ammo would you like to add?");
+                        Console.WriteLine("Current weapon ammo: {0}", selectedWeapon.GetWeaponAmmo());
+                        Console.WriteLine("Available ammo: {0}", playerInventory.ammo.GetAmount());
+                        Console.WriteLine("(One shot of this weapon requires at least {1} ammo)", selectedWeapon.GetWeaponName(), selectedWeapon.Getpower() );
+                        Console.Write("Enter value: ");
                         string input = Console.ReadLine().ToLower();
-                        switch(input)
+                        if (!int.TryParse(input, out ammoAdd))
                         {
-                            default:
-                                Console.WriteLine("Didn't understand. Taking that as a no.\n");
-                                break;
-                            case "y":
-                                playerInventory.ammo.Use();
-                                selectedWeapon.AddAmmo(10);
-                                Console.WriteLine("10 ammo added to {0}.\n{0} ammo: {1}\nAvailable ammo: {2}\n", selectedWeapon.GetWeaponName(), selectedWeapon.GetWeaponAmmo(), playerInventory.ammo);
-                                break;
-                            case "yes":
-                                playerInventory.ammo.Use();
-                                selectedWeapon.AddAmmo(10);
-                                Console.WriteLine("10 ammo added to {0}.\n{0} ammo: {1}\nAvailable ammo: {2}\n", selectedWeapon.GetWeaponName(), selectedWeapon.GetWeaponAmmo(), playerInventory.ammo);
-                                break;
-                            case "n":
-                                Console.WriteLine("No ammo added.\n");
-                                break;
-                            case "no":
-                                Console.WriteLine("No ammo added.\n");
-                                break;
-
+                            Console.WriteLine("Non-numerical value entered.");
+                            break;
                         }
+                        selectedWeapon.AddAmmo(ammoAdd);
+                        Console.WriteLine("Press enter to continue...");
+                        Console.ReadLine();
                     }
                         
                     break;

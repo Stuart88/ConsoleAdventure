@@ -67,7 +67,7 @@ namespace ConsoleAdventure
             else
             {
                 this.ammo += ammo;
-                Console.WriteLine("{0} ammo increased to {1}\n", name, ammo);
+                Console.WriteLine("{0} ammo increased to {1}\n", GetWeaponName(), GetWeaponAmmo());
             }
         }
         public bool WeaponStatus()
@@ -76,8 +76,9 @@ namespace ConsoleAdventure
         }
         public void WeaponInfo()
         {
-            Console.WriteLine("\nCurrent weapon: {0}", name);
-            Console.WriteLine("Weapon power: {0}\n", power);
+            Console.WriteLine("\nCurrent weapon: {0}", GetWeaponName());
+            Console.WriteLine("Weapon power: {0}", Getpower());
+            Console.WriteLine("Weapon ammo: {0}\n", GetWeaponAmmo());
             Console.Write("Press enter to continue...");
             Console.ReadLine();
         }

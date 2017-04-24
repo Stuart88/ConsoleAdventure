@@ -63,6 +63,7 @@ namespace ConsoleAdventure
                             player.Use("ammo");
                         break;
 
+                    case "health":
                     case "use health":
                         if (player.playerInventory.health.GetAmount() == 0)
                         {
@@ -72,18 +73,26 @@ namespace ConsoleAdventure
                         else
                             player.Use("health");
                         break;
+                    case "1":
+                    case "equip 1":
                     case "equip fork":
                         player.Equip("fork");
                         break;
+                    case "2":
+                    case "equip 2":
                     case "equip antler":
                         player.Equip("antler");
                         break;
+                    case "3":
+                    case "equip3":
                     case "equip poison spear":
                         player.Equip("poison spear");
                         break;
                     case "equip spear":
                         player.Equip("spear");
                         break;
+                    case "4":
+                    case "equip 4":
                     case "equip sludge pistol":
                         player.Equip("sludge pistol");
                         break;
@@ -93,12 +102,16 @@ namespace ConsoleAdventure
                     case "equip pistol":
                         player.Equip("pistol");
                         break;
+                    case "5":
+                    case "equip 5":
                     case "equip gutting machine":
                         player.Equip("gutting machine");
                         break;
                     case "equip gut machine":
                         player.Equip("gut machine");
                         break;
+                    case "6":
+                    case "equip 6":
                     case "equip battleship cannon":
                         player.Equip("battleship cannon");
                         break;
@@ -111,12 +124,17 @@ namespace ConsoleAdventure
                     case "equip ship":
                         player.Equip("ship");
                         break;
+                    case "wi":
+                    case "weapon":
                     case "weapon info":
                         player.selectedWeapon.WeaponInfo();
                         break;
+                    case "pi":
+                    case "player":
                     case "player info":
                         player.ViewPlayerStats();
                         break;
+                    case "i":
                     case "inventory":
                         player.playerInventory.InventoryInfo();
                         break;
@@ -134,11 +152,18 @@ namespace ConsoleAdventure
                             "encountered less often on the battlefield. Some are extremely rare.\n" +
                             "Hint: Check enemy info before attacking.\n\n   Created in a day by Stuart Aitken\n");
                         break;
+                    case "i am the most puny":
+                        player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
+                        Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                        Console.Write("Press enter to continue...");
+                        Console.ReadLine();
+                        break;
                     case "help":
                         Console.WriteLine("\n___Available Commands___");
                         Console.WriteLine("Battle: --------- Find battle!");
                         Console.WriteLine("Use health: ----- Use health pill.");
                         Console.WriteLine("Equip X: -------- Equip desired weapon.");
+                        Console.WriteLine("                  (Can enter full weapon name or numbers 1-6)");
                         Console.WriteLine("Shop: ----------- Enter shop");
                         Console.WriteLine("Add ammo: ------- Add ammo to current weapon.");
                         Console.WriteLine("Player info: ---- View player info.");
@@ -160,27 +185,43 @@ namespace ConsoleAdventure
                 {
                     Console.WriteLine("___________________________________");
                     Console.WriteLine("\n_____Available Items_____");
+                    Console.WriteLine("1. Health pill: £{0}", player.playerInventory.health.GetCost());
                     if (!player.playerInventory.antler.WeaponStatus())
-                        Console.WriteLine("{0} : £{1}", player.playerInventory.antler.GetWeaponName(), player.playerInventory.antler.Getpower());
+                        Console.WriteLine("2. {0} : £{1}", player.playerInventory.antler.GetWeaponName(), player.playerInventory.antler.Getpower());
                     if (!player.playerInventory.poisonSpear.WeaponStatus())
-                        Console.WriteLine("{0} : £{1}", player.playerInventory.poisonSpear.GetWeaponName(), player.playerInventory.poisonSpear.Getpower());
+                        Console.WriteLine("3. {0} : £{1}", player.playerInventory.poisonSpear.GetWeaponName(), player.playerInventory.poisonSpear.Getpower());
                     if (!player.playerInventory.toxicSludgePistol.WeaponStatus())
-                        Console.WriteLine("{0} : £{1}", player.playerInventory.toxicSludgePistol.GetWeaponName(), player.playerInventory.toxicSludgePistol.Getpower());
+                        Console.WriteLine("4. {0} : £{1}", player.playerInventory.toxicSludgePistol.GetWeaponName(), player.playerInventory.toxicSludgePistol.Getpower());
                     if (!player.playerInventory.guttingMachine.WeaponStatus())
-                        Console.WriteLine("{0} : £{1}", player.playerInventory.guttingMachine.GetWeaponName(), player.playerInventory.guttingMachine.Getpower());
+                        Console.WriteLine("5. {0} : £{1}", player.playerInventory.guttingMachine.GetWeaponName(), player.playerInventory.guttingMachine.Getpower());
                     if (!player.playerInventory.battleshipCannon.WeaponStatus())
-                        Console.WriteLine("{0} : £{1}", player.playerInventory.battleshipCannon.GetWeaponName(), player.playerInventory.battleshipCannon.Getpower());
-                    Console.WriteLine("Ammo : £{0}", player.playerInventory.ammo.GetCost());
-                    Console.WriteLine("Health pill: £{0}", player.playerInventory.health.GetCost());
+                        Console.WriteLine("6. {0} : £{1}", player.playerInventory.battleshipCannon.GetWeaponName(), player.playerInventory.battleshipCannon.Getpower());
+                    Console.WriteLine("7. 10 Ammo : £{0}", player.playerInventory.ammo.GetCost()*10);
+                    Console.WriteLine("8. 20 Ammo : £{0}", player.playerInventory.ammo.GetCost() * 20);
+                    Console.WriteLine("9. 50 Ammo : £{0}", player.playerInventory.ammo.GetCost() * 50);
+                    Console.WriteLine("10. 100 Ammo : £{0}", player.playerInventory.ammo.GetCost() * 100);
+                    
                     Console.WriteLine();
                     Console.WriteLine("Available funds: £{0}", player.playerInventory.money.GetAmount());
-                    Console.WriteLine("Use 'buy' command to purchase\nType 'exit' to leave.\n");
+                    Console.WriteLine("Inventory ammo: {0}", player.playerInventory.ammo.GetAmount());
+                    Console.WriteLine("Inventory health pills: {0}", player.playerInventory.health.GetAmount());
+                    Console.WriteLine("Type 'buy #' to purchase item #.");
+                    Console.WriteLine("Type 'exit' to leave.");;
                     Console.Write("Enter command: ");
                     command = Console.ReadLine().ToLower();
+                    
                     Console.WriteLine("___________________________________");
 
                     switch (command)
                     {
+                        case "i am the most puny":
+                            player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
+                            Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                            Console.Write("Press enter to continue...");
+                            Console.ReadLine();
+                            break;
+
+                        case "buy 2":
                         case "buy antler":
                             if (player.playerInventory.antler.WeaponStatus())
                             {
@@ -205,6 +246,7 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
+                        case "buy 3":
                         case "buy poison spear":
                             if (player.playerInventory.poisonSpear.WeaponStatus())
                             {
@@ -229,6 +271,7 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
+                        case "buy 4":
                         case "buy toxic sludge pistol":
                             if (player.playerInventory.toxicSludgePistol.WeaponStatus())
                             {
@@ -253,7 +296,9 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
-                        case "buy toxic gutting machine":
+                        case "buy 5":
+                        case "buy gutting machine":
+                        case "buy gut machine":
                             if (player.playerInventory.guttingMachine.WeaponStatus())
                             {
                                 Console.WriteLine("\nYou already own this, you pathetic worm.");
@@ -277,6 +322,7 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
+                        case "buy 6":
                         case "buy battleship cannon":
                             if (player.playerInventory.battleshipCannon.WeaponStatus())
                             {
@@ -301,6 +347,7 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
+                        case "buy 1":
                         case "buy health":
                             if (player.playerInventory.money.GetAmount() < player.playerInventory.health.GetCost())
                             {
@@ -318,8 +365,9 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
-                        case "buy ammo":
-                            if (player.playerInventory.money.GetAmount() < player.playerInventory.ammo.GetCost())
+                        case "buy 7":
+                        case "buy 10 ammo":
+                            if (player.playerInventory.money.GetAmount() < player.playerInventory.ammo.GetCost()*10)
                             {
                                 Console.WriteLine("\nYou don't have enough money, you microbe.");
                                 Console.Write("Press enter to continue...");
@@ -328,9 +376,63 @@ namespace ConsoleAdventure
                             }
                             else
                             {
-                                player.playerInventory.ammo.SetAmount(player.playerInventory.ammo.GetAmount() + 1);
-                                player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() - player.playerInventory.ammo.GetCost());
-                                Console.WriteLine("\nOne ammo bought.");
+                                player.playerInventory.ammo.SetAmount(player.playerInventory.ammo.GetAmount() + 10);
+                                player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() - player.playerInventory.ammo.GetCost()*10);
+                                Console.WriteLine("\n10 ammo bought.");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
+                                break;
+                            }
+                        case "buy 8":
+                        case "buy 20 ammo":
+                            if (player.playerInventory.money.GetAmount() < player.playerInventory.ammo.GetCost() * 20)
+                            {
+                                Console.WriteLine("\nYou don't have enough money, you microbe.");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
+                                break;
+                            }
+                            else
+                            {
+                                player.playerInventory.ammo.SetAmount(player.playerInventory.ammo.GetAmount() + 20);
+                                player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() - player.playerInventory.ammo.GetCost() * 20);
+                                Console.WriteLine("\n20 ammo bought.");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
+                                break;
+                            }
+                        case "buy 9":
+                        case "buy 50 ammo":
+                            if (player.playerInventory.money.GetAmount() < player.playerInventory.ammo.GetCost() * 50)
+                            {
+                                Console.WriteLine("\nYou don't have enough money, you microbe.");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
+                                break;
+                            }
+                            else
+                            {
+                                player.playerInventory.ammo.SetAmount(player.playerInventory.ammo.GetAmount() + 50);
+                                player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() - player.playerInventory.ammo.GetCost() * 50);
+                                Console.WriteLine("\n50 ammo bought.");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
+                                break;
+                            }
+                        case "buy 10":
+                        case "buy 100 ammo":
+                            if (player.playerInventory.money.GetAmount() < player.playerInventory.ammo.GetCost() * 100)
+                            {
+                                Console.WriteLine("\nYou don't have enough money, you microbe.");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
+                                break;
+                            }
+                            else
+                            {
+                                player.playerInventory.ammo.SetAmount(player.playerInventory.ammo.GetAmount() + 100);
+                                player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() - player.playerInventory.ammo.GetCost() * 100);
+                                Console.WriteLine("\n100 ammo bought.");
                                 Console.Write("Press enter to continue...");
                                 Console.ReadLine();
                                 break;
@@ -368,6 +470,8 @@ namespace ConsoleAdventure
                             default:
                                 Console.WriteLine("\nStop talking nonsense, you're under attack!\n");
                                 break;
+                        case "hit":
+                        case "fight":
                         case "attack":
                             if (player.selectedWeapon.UseWeapon())
                             {
@@ -381,6 +485,9 @@ namespace ConsoleAdventure
                                     Console.WriteLine("{0} points gained!", enemies[battleNum].GetAttackDamage());
                                     Console.WriteLine("Dead {0} dropped £{1}!\n", enemies[battleNum].GetName(), enemies[battleNum].GetAttackDamage());
                                     Console.WriteLine("Current health: {0}", player.GetHealth());
+                                    Console.WriteLine("Current weapon: {0}", player.selectedWeapon.GetWeaponName());
+                                    Console.WriteLine("Weapon ammo: {0}", player.selectedWeapon.GetWeaponAmmo());
+                                    Console.WriteLine("Invetory ammo: {0}", player.playerInventory.ammo.GetAmount());
                                     Console.WriteLine("Current points: {0}", player.GetPoints());
                                     Console.WriteLine("Current money: £{0}", player.playerInventory.money.GetAmount());
                                     Console.Write("Press enter to continue");
@@ -437,7 +544,8 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
-                                
+
+                        case "ammo":
                         case "add ammo":
                             if (player.playerInventory.ammo.GetAmount() == 0)
                             {
@@ -447,7 +555,7 @@ namespace ConsoleAdventure
                             else
                                 player.Use("ammo");
                             break;
-                    
+                        case "health":
                         case "use health":
                             if (player.playerInventory.health.GetAmount() == 0)
                             {
@@ -457,18 +565,26 @@ namespace ConsoleAdventure
                             else
                                 player.Use("health");
                             break;
+                        case "1":
+                        case "equip 1":
                         case "equip fork":
                             player.Equip("fork");
                             break;
+                        case "2":
+                        case "equip 2":
                         case "equip antler":
                             player.Equip("antler");
                             break;
+                        case "3":
+                        case "equip 3":
                         case "equip poison spear":
                             player.Equip("poison spear");
                             break;
                         case "equip spear":
                             player.Equip("spear");
                             break;
+                        case "4":
+                        case "equip 4":
                         case "equip sludge pistol":
                             player.Equip("sludge pistol");
                             break;
@@ -478,12 +594,16 @@ namespace ConsoleAdventure
                         case "equip pistol":
                             player.Equip("pistol");
                             break;
+                        case "5":
+                        case "equip 5":
                         case "equip gutting machine":
                             player.Equip("gutting machine");
                             break;
                         case "equip gut machine":
                             player.Equip("gut machine");
                             break;
+                        case "6":
+                        case "equip 6":
                         case "equip battleship cannon":
                             player.Equip("battleship cannon");
                             break;
@@ -496,22 +616,36 @@ namespace ConsoleAdventure
                         case "equip ship":
                             player.Equip("ship");
                             break;
+                        case "f":
                         case "flee":
                             Console.WriteLine("A pathetic escape!");
                             Console.WriteLine("You lose 10 points, feeble worm!\n");
                             player.SetPoints(player.GetPoints() - 10);
+                            Console.WriteLine("Current health: {0}", player.GetHealth());
+                            Console.WriteLine("Current weapon: {0}", player.selectedWeapon.GetWeaponName());
+                            Console.WriteLine("Weapon ammo: {0}", player.selectedWeapon.GetWeaponAmmo());
+                            Console.WriteLine("Invetory ammo: {0}", player.playerInventory.ammo.GetAmount());
+                            Console.WriteLine("Current points: {0}", player.GetPoints());
+                            Console.WriteLine("Current money: £{0}", player.playerInventory.money.GetAmount());
+                            
                             enemies[battleNum].Kill();
                             fighting = false;
                             Console.WriteLine("Press enter to continue...");
                             Console.ReadLine();
                             break;
 
+                        case "wi":
+                        case "weapon":
                         case "weapon info":
                             player.selectedWeapon.WeaponInfo();
                             break;
+                        case "pi":
+                        case "player":
                         case "player info":
                             player.ViewPlayerStats();
                             break;
+                        case "ei":
+                        case "enemy":
                         case "enemy info":
                             for (int i = 0; i < 10; i++)
                             {
@@ -521,6 +655,9 @@ namespace ConsoleAdventure
                                 }
                             }
                             break;
+                        case "i":
+                        case "inventory info":
+                        case "view inventory":
                         case "inventory":
                             player.playerInventory.InventoryInfo();
                             break;
