@@ -159,8 +159,8 @@ namespace ConsoleAdventure
                             "in order to complete battles, buy items and make further progress. The aim\n" +
                             "is to earn enough money to afford all the available weapons in the shop, \n" +
                             "after which point it should be possible to easily defeat all enemies in combat.\n" +
-                            "There are ten types of enemy in total. The most difficult enemies are\n" +
-                            "encountered less often on the battlefield. Some are extremely rare.\n" +
+                            "There are ten types of enemy in total. The more difficult enemies are\n" +
+                            "not encountered until some progress has been made.\n" +
                             "\n   Created in a day by Stuart Aitken\n");
                         break;
                     case "i am the most puny":

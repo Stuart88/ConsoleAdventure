@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleAdventure
 {
-    //Fields
+    
     class Player
     {
         public Inventory playerInventory = new Inventory();
