@@ -1,4 +1,4 @@
-# ConsoleAdventure
+# Console Adventure
 A text based battle game
 
 This is a basic text-based game, where the user inputs various commands in order to complete battles,
