@@ -6,3 +6,5 @@ buy items and make further progress. The aim is to earn enough money to afford a
 in the shop, after which point it should be possible to easily defeat all enemies in combat. There are
 ten types of enemy in total. The most difficult enemies are encountered less often on the battlefield.
 Some are extremely rare.
+
+Created over the course of one very long evening. Took maybe 8 hours in total.
