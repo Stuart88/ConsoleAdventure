@@ -10,13 +10,15 @@ namespace ConsoleAdventure
     class Player
     {
         public Inventory playerInventory = new Inventory();
+        
         private string name;
         private int health;
         private int money;
         private int points;
 
+
         public Weapon selectedWeapon;
-        //Location location = new Location....?
+
 
         public Player(string name)
         {
@@ -193,6 +195,10 @@ namespace ConsoleAdventure
         {
             return name;
         }
+        public void SetName(string s)
+        {
+            name = s;
+        }
         public void ViewPlayerStats()
         {
             money = playerInventory.money.GetAmount();
@@ -241,6 +247,142 @@ namespace ConsoleAdventure
         {
             return health;
         }
+        public void CheckProgress(Inventory i, Enemy[] enemy)
+        {
+            double progress = 0;
+            int cycle = 1;
+            
+            Console.WriteLine("\n_____ ENEMIES _____");
+            for(int k = enemy.Length-1; k>-1;k--)
+            {
+                
+                if (enemy[k].KilledOnce())
+                {
+                    Console.WriteLine("{0}. {1}: DEFEATED", cycle, enemy[k].GetName());
+                    progress++;
+                }
+                else if(enemy[k].CheckSeenOnce())
+                {
+                    Console.WriteLine("{0}. {1}: FLED", cycle, enemy[k].GetName());
+                }
+                else
+                    Console.WriteLine("{0}: UNKNOWN", cycle);
+                cycle++;
+                
+                
+            }
+            progress += i.CheckProgressInvetory();
+            progress = (progress / 16.0) * 100.0;
+            Console.WriteLine("_____ GAME PROGRESS : {0}% _____", progress);
+            Console.WriteLine();
+        }
+        public void SaveGame(Inventory i, Enemy[] enemy, string s)
+        {
+            List<string> data = new List<string>();
+            //Player info
+            data.Add(GetName());
+            data.Add(GetHealth().ToString());
+            data.Add(selectedWeapon.GetWeaponName());
+            data.Add(GetPoints().ToString());
+            //Inventory info
+            data.Add(playerInventory.money.GetAmount().ToString());
+            data.Add(playerInventory.ammo.GetAmount().ToString());
+            data.Add(playerInventory.health.GetAmount().ToString());
+            //Weapon info
+            i.fork.SaveInfo(ref data);
+            i.antler.SaveInfo(ref data);
+            i.poisonSpear.SaveInfo(ref data);
+            i.toxicSludgePistol.SaveInfo(ref data);
+            i.guttingMachine.SaveInfo(ref data);
+            i.battleshipCannon.SaveInfo(ref data);
+            //Enemy info
+            foreach(Enemy e in enemy)
+            {
+                e.SaveData(ref data);
+            }
+            //Save to file
+            string directory = System.IO.Directory.GetCurrentDirectory();
+            directory = directory + "\\" + s + ".txt";
+            if (System.IO.File.Exists(directory))
+            {
+                Console.Write("File already exists! Overwrite? (Y/N): ");
+                string overwrite = Console.ReadLine().ToLower();
+                switch (overwrite)
+                {
+                    case "y":
+                        System.IO.StreamWriter file = new System.IO.StreamWriter(directory);
+
+                        foreach (var t in data)
+                        {
+                            file.WriteLine(t);
+                        }
+                        file.Close();
+                        break;
+                    case "n":
+                        Console.WriteLine("Save aborted");
+                        break;
+                }
+            }
+            else
+            {
+                System.IO.StreamWriter file = new System.IO.StreamWriter(directory);
+                foreach (var t in data)
+                {
+                    file.WriteLine(t);
+                }
+                file.Close();
+            }
+            Console.Write("Game saved. Press enter to continue...");
+            Console.ReadLine();
+        }
+
+        public void LoadGame(ref Inventory i, ref Enemy[] enemy, string s)
+        {
+            List<string> data = new List<string>();
+            string directory = System.IO.Directory.GetCurrentDirectory();
+            directory = directory + "\\" + s + ".txt";
+
+            if (!System.IO.File.Exists(directory))
+                Console.WriteLine("File not found!");
+            else
+            {
+                System.IO.StreamReader file = new System.IO.StreamReader(directory);
+                data = System.IO.File.ReadAllLines(directory).ToList();
+
+
+                //Player info
+                SetName(data[0]);
+                SetHealth(int.Parse(data[1]));
+                selectedWeapon.SetWeaponName(data[2]);
+                SetPoints(int.Parse(data[3]));
+                //Inventory info
+                playerInventory.money.SetAmount(int.Parse(data[4]));
+                playerInventory.ammo.SetAmount(int.Parse(data[5]));
+                playerInventory.health.SetAmount(int.Parse(data[6]));
+
+                //Weapon info
+                i.fork.LoadInfo(data[7], data[8], data[9]);
+                i.antler.LoadInfo(data[10], data[11], data[12]);
+                i.poisonSpear.LoadInfo(data[13], data[14], data[15]);
+                i.toxicSludgePistol.LoadInfo(data[16], data[17], data[18]);
+                i.guttingMachine.LoadInfo(data[19], data[20], data[21]);
+                i.battleshipCannon.LoadInfo(data[22], data[23], data[24]);
+                Equip(selectedWeapon.GetWeaponName());
+                //Enemy info
+                int j = 25;
+                for (int k = 0; k < 10; k++)
+                {
+                    enemy[k].LoadData(data[j], data[j + 1], data[j + 2]);
+                    j += 3;
+                }
+
+                file.Close();
+                Console.WriteLine("_____ Game Loaded _____");
+                ViewPlayerStats();
+            }
+            
+        }
+
         
     }
 

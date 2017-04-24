@@ -12,7 +12,7 @@ namespace ConsoleAdventure
         protected int power;
         protected int ammo;
         protected bool available;
-        protected bool selected;
+        public bool selected;
 
         public Weapon(string name, int power)
             : this(name, power, 0, false, false) { }
@@ -28,15 +28,22 @@ namespace ConsoleAdventure
         {
             return name;
         }
+        public void SetWeaponName(string s)
+        {
+            name = s;
+        }
         public int GetWeaponAmmo()
         {
             return ammo;
+        }
+        public void SetWeaponAmmo(int set)
+        {
+            ammo = set;
         }
         public bool UseWeapon()
         {
             if (ammo < power && (name == "Toxic Sludge Pistol" || name == "Battleship Cannon"))
             {
-                Console.WriteLine("Not enough ammo!\n");
                 return false;
             }
             else
@@ -70,6 +77,10 @@ namespace ConsoleAdventure
                 Console.WriteLine("{0} ammo increased to {1}\n", GetWeaponName(), GetWeaponAmmo());
             }
         }
+        public void SetWeaponStatus(bool set)
+        {
+            available= set;
+        }
         public bool WeaponStatus()
         {
             return available;
@@ -81,6 +92,19 @@ namespace ConsoleAdventure
             Console.WriteLine("Weapon ammo: {0}\n", GetWeaponAmmo());
             Console.Write("Press enter to continue...");
             Console.ReadLine();
+        }
+        
+        public void SaveInfo(ref List<string> data)
+        {
+            data.Add(GetWeaponAmmo().ToString());
+            data.Add(WeaponStatus().ToString());
+            data.Add(available.ToString());
+        }
+        public void LoadInfo(string s, string t, string u)
+        {
+            SetWeaponAmmo(int.Parse(s));
+            SetWeaponStatus(bool.Parse(t));
+            available = bool.Parse(u);
         }
     }
 }

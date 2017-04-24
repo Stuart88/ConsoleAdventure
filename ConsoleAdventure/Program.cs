@@ -45,9 +45,18 @@ namespace ConsoleAdventure
 
                 switch (command)
                 {
-                    default:
-                        Console.WriteLine("What is this bollocks you're talking about, {0}!", player.GetName());
+                    
+                    case "s":
+                    case "save":
+                        Console.Write("Enter save name (simple numbers are easiest to remember): ");
+                        player.SaveGame(player.playerInventory, enemies, Console.ReadLine());
                         break;
+                    case "l":
+                    case "load":
+                        Console.Write("Enter saved game name: ");
+                        player.LoadGame(ref player.playerInventory, ref enemies, Console.ReadLine());
+                        break;
+                    case "b":
                     case "battle":
                         battleNum = player.GetBattleNumber();                        
                         enemies[battleNum].Create();
@@ -142,6 +151,7 @@ namespace ConsoleAdventure
                         Console.WriteLine("\nYou have entered the shop, feeble {0}.", player.GetName());
                         inShop = true;
                         break;
+                    case "gi":
                     case "game info":
                         Console.WriteLine("\n_______WELCOME TO THE MOST EPIC ADVENTURE ON EARTH_____\n");
                         Console.WriteLine("This is a basic text-based game, where the user inputs various commands\n" +
@@ -150,7 +160,7 @@ namespace ConsoleAdventure
                             "after which point it should be possible to easily defeat all enemies in combat.\n" +
                             "There are ten types of enemy in total. The most difficult enemies are\n" +
                             "encountered less often on the battlefield. Some are extremely rare.\n" +
-                            "Hint: Check enemy info before attacking.\n\n   Created in a day by Stuart Aitken\n");
+                            "\n   Created in a day by Stuart Aitken\n");
                         break;
                     case "i am the most puny":
                         player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
@@ -158,8 +168,35 @@ namespace ConsoleAdventure
                         Console.Write("Press enter to continue...");
                         Console.ReadLine();
                         break;
+                    case "demigod":
+                        player.SetHealth(10000);
+                        Console.WriteLine("Partial god status achieved. Health: {0}", player.GetHealth());
+                        Console.Write("Press enter to continue...");
+                        Console.ReadLine();
+                        break;
+                    case "bandana":
+                        player.playerInventory.ammo.SetAmount(99999);
+                        player.playerInventory.antler.SetAvailable();
+                        player.playerInventory.poisonSpear.SetAvailable();
+                        player.playerInventory.toxicSludgePistol.SetAvailable();
+                        player.playerInventory.guttingMachine.SetAvailable();
+                        player.playerInventory.battleshipCannon.SetAvailable();
+                        player.playerInventory.toxicSludgePistol.SetWeaponAmmo(99999);
+                        player.playerInventory.battleshipCannon.SetWeaponAmmo(99999);
+                        player.playerInventory.health.SetAmount(99999);
+                        Console.WriteLine("A charitable shopkeeper donation occurred.");
+                        Console.Write("Press enter to continue...");
+                        Console.ReadLine();
+                        break;
+                    case "p":
+                    case "progress":
+                    case "check progress":
+                        player.CheckProgress(player.playerInventory, enemies);
+                        break;
+
                     case "help":
-                        Console.WriteLine("\n___Available Commands___");
+                        Console.WriteLine("\n_____ Available Commands _____");
+                        Console.WriteLine("Some commands have shortcuts e.g. enter 'b' for battle\n");
                         Console.WriteLine("Battle: --------- Find battle!");
                         Console.WriteLine("Use health: ----- Use health pill.");
                         Console.WriteLine("Equip X: -------- Equip desired weapon.");
@@ -169,22 +206,36 @@ namespace ConsoleAdventure
                         Console.WriteLine("Player info: ---- View player info.");
                         Console.WriteLine("Weapon info: ---- View info for current weapon.");
                         Console.WriteLine("Inventory: ------ View inventory info.");
+                        Console.WriteLine("Check progress: - Check game progress.");
+
+
+                        Console.WriteLine("\nLoad: ----------- Load a game.");
+                        Console.WriteLine("Save: ----------- Save game.");
                         Console.WriteLine("Game info: ------ Display game information.");
                         Console.WriteLine("Quit / Exit: ---- Exit game.\n");
                         break;
                     case "quit":
-                        playing = false;
-                        break;
                     case "exit":
-                        playing = false;
+                        Console.Write("\nReally quit? Y/N : ");
+                        switch (Console.ReadLine().ToLower())
+                        {
+                            case "y":
+                            case "yes":
+                                playing = false;
+                                break;
+                            case "n":
+                            case "no":
+                                break;
+                        }
                         break;
+
+                        
 
                 }
 
                 while(inShop)
                 {
-                    Console.WriteLine("___________________________________");
-                    Console.WriteLine("\n_____Available Items_____");
+                    Console.WriteLine("\n_____ SHOP: Available Items _____");
                     Console.WriteLine("1. Health pill: £{0}", player.playerInventory.health.GetCost());
                     if (!player.playerInventory.antler.WeaponStatus())
                         Console.WriteLine("2. {0} : £{1}", player.playerInventory.antler.GetWeaponName(), player.playerInventory.antler.Getpower());
@@ -206,7 +257,7 @@ namespace ConsoleAdventure
                     Console.WriteLine("Inventory ammo: {0}", player.playerInventory.ammo.GetAmount());
                     Console.WriteLine("Inventory health pills: {0}", player.playerInventory.health.GetAmount());
                     Console.WriteLine("Type 'buy #' to purchase item #.");
-                    Console.WriteLine("Type 'exit' to leave.");;
+                    Console.WriteLine("Type 'leave' to leave shop.");;
                     Console.Write("Enter command: ");
                     command = Console.ReadLine().ToLower();
                     
@@ -217,6 +268,26 @@ namespace ConsoleAdventure
                         case "i am the most puny":
                             player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
                             Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                            Console.Write("Press enter to continue...");
+                            Console.ReadLine();
+                            break;
+                        case "demigod":
+                            player.SetHealth(10000);
+                            Console.WriteLine("Partial god status achieved. Health: {0}", player.GetHealth());
+                            Console.Write("Press enter to continue...");
+                            Console.ReadLine();
+                            break;
+                        case "bandana":
+                            player.playerInventory.ammo.SetAmount(99999);
+                            player.playerInventory.antler.SetAvailable();
+                            player.playerInventory.poisonSpear.SetAvailable();
+                            player.playerInventory.toxicSludgePistol.SetAvailable();
+                            player.playerInventory.guttingMachine.SetAvailable();
+                            player.playerInventory.battleshipCannon.SetAvailable();
+                            player.playerInventory.toxicSludgePistol.SetWeaponAmmo(99999);
+                            player.playerInventory.battleshipCannon.SetWeaponAmmo(99999);
+                            player.playerInventory.health.SetAmount(99999);
+                            Console.WriteLine("A charitable shopkeeper donation occurred.");
                             Console.Write("Press enter to continue...");
                             Console.ReadLine();
                             break;
@@ -437,7 +508,23 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
+                        case "quit":
                         case "exit":
+                            Console.Write("\nReally quit? Y/N : ");
+                            switch (Console.ReadLine().ToLower())
+                            {
+                                case "y":
+                                case "yes":
+                                    inShop = false;
+                                    playing = false;
+                                    break;
+                                case "n":
+                                case "no":
+                                    break;
+                            }
+                            break;
+                        case "leave":
+                        case "leave shop":
                             inShop = false;
                             break;
                     }
@@ -451,10 +538,12 @@ namespace ConsoleAdventure
                         if (enemies[i].Exists())
                         {
                             battleNum = i;
-                            Console.WriteLine("___________________________________");
-                            Console.WriteLine("A wild {0} is attacking you!", enemies[battleNum].GetName());
+                            Console.WriteLine("_____ A wild {0} is attacking you! _____", enemies[battleNum].GetName());
                             Console.WriteLine("Your health: {0}", player.GetHealth());
+                            Console.WriteLine("Equipped weapon: {0}", player.selectedWeapon.GetWeaponName());
+                            Console.WriteLine("Weapon ammo: {0}", player.selectedWeapon.GetWeaponAmmo());
                             Console.WriteLine("Enemy health: {0}", enemies[i].GetHealth());
+                            Console.WriteLine("Enemy power: {0}", enemies[i].GetAttackDamage());
                         }
                     }
 
@@ -470,8 +559,33 @@ namespace ConsoleAdventure
                             default:
                                 Console.WriteLine("\nStop talking nonsense, you're under attack!\n");
                                 break;
-                        case "hit":
-                        case "fight":
+                        case "i am the most puny":
+                            player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
+                            Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                            Console.Write("Press enter to continue...");
+                            Console.ReadLine();
+                            break;
+                        case "demigod":
+                            player.SetHealth(10000);
+                            Console.WriteLine("Partial god status achieved. Health: {0}", player.GetHealth());
+                            Console.Write("Press enter to continue...");
+                            Console.ReadLine();
+                            break;
+                        case "bandana":
+                            player.playerInventory.ammo.SetAmount(99999);
+                            player.playerInventory.antler.SetAvailable();
+                            player.playerInventory.poisonSpear.SetAvailable();
+                            player.playerInventory.toxicSludgePistol.SetAvailable();
+                            player.playerInventory.guttingMachine.SetAvailable();
+                            player.playerInventory.battleshipCannon.SetAvailable();
+                            player.playerInventory.toxicSludgePistol.SetWeaponAmmo(99999);
+                            player.playerInventory.battleshipCannon.SetWeaponAmmo(99999);
+                            player.playerInventory.health.SetAmount(99999);
+                            Console.WriteLine("A charitable shopkeeper donation occurred.");
+                            Console.Write("Press enter to continue...");
+                            Console.ReadLine();
+                            break;
+                        case "a":
                         case "attack":
                             if (player.selectedWeapon.UseWeapon())
                             {
@@ -492,6 +606,7 @@ namespace ConsoleAdventure
                                     Console.WriteLine("Current money: £{0}", player.playerInventory.money.GetAmount());
                                     Console.Write("Press enter to continue");
                                     Console.ReadLine();
+                                    enemies[battleNum].CheckFirstKill();
                                     enemies[battleNum].Kill();
                                     fighting = false;
                                     break;
@@ -524,23 +639,8 @@ namespace ConsoleAdventure
                             }
                             else
                             {
-                                Console.WriteLine("\nWhy did you attack?! You have no ammo!");
-                                Console.WriteLine("{0} hit you! Did {1} damage.\n", enemies[battleNum].GetName(), enemies[battleNum].GetAttackDamage());
-                                player.SetHealth(player.GetHealth() - enemies[battleNum].GetAttackDamage());
-                                Console.Write("Press enter to continue...\n");
-                                Console.ReadLine();
-                                if (player.GetHealth() < 0)
-                                {
-                                    player.SetHealth(0);
-                                    Console.WriteLine("YOU DIED!\n");
-                                    fighting = false;
-                                    playing = false;
-                                    Console.WriteLine("Press enter to continue...\n");
-                                    Console.ReadLine();
-                                    break;
-                                }
-                                Console.WriteLine("Current health: {0}\n", player.GetHealth());
-                                Console.WriteLine("Press enter to continue...\n");
+                                Console.WriteLine("You have no ammo!\nAdd ammo or equip another weapon.");
+                                Console.Write("Press enter to continue...");
                                 Console.ReadLine();
                                 break;
                             }
@@ -555,6 +655,7 @@ namespace ConsoleAdventure
                             else
                                 player.Use("ammo");
                             break;
+                        case "h":
                         case "health":
                         case "use health":
                             if (player.playerInventory.health.GetAmount() == 0)
@@ -627,7 +728,7 @@ namespace ConsoleAdventure
                             Console.WriteLine("Invetory ammo: {0}", player.playerInventory.ammo.GetAmount());
                             Console.WriteLine("Current points: {0}", player.GetPoints());
                             Console.WriteLine("Current money: £{0}", player.playerInventory.money.GetAmount());
-                            
+                            enemies[battleNum].SeenOnce();
                             enemies[battleNum].Kill();
                             fighting = false;
                             Console.WriteLine("Press enter to continue...");
@@ -663,7 +764,7 @@ namespace ConsoleAdventure
                             break;
 
                         case "help":
-                            Console.WriteLine("\n___Available Commands___");
+                            Console.WriteLine("\n_____ Available Commands _____");
                             Console.WriteLine("Attack: --------- Atack enemy using current weapon.");
                             Console.WriteLine("Use health: ----- Use health pill.");
                             Console.WriteLine("Equip X: -------- Equip desired weapon.");

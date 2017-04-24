@@ -13,6 +13,8 @@ namespace ConsoleAdventure
         protected int attackDamage;
         protected int resetHealth;
         protected bool exists;
+        protected bool killedOnce;
+        protected bool seenOnce;
         
 
         public Enemy(string name, int health, int attackDamage)
@@ -22,6 +24,8 @@ namespace ConsoleAdventure
             resetHealth = health;
             this.attackDamage = attackDamage;
             exists = false;
+            killedOnce = false;
+            seenOnce = false;
         }
 
         public string GetName()
@@ -44,6 +48,11 @@ namespace ConsoleAdventure
         {
             exists = true;
         }
+        public void CheckFirstKill()
+        {
+            if (killedOnce == false)
+                killedOnce = true;
+        }
         public void Kill()
         {
             exists = false;
@@ -60,6 +69,31 @@ namespace ConsoleAdventure
             Console.WriteLine("Attack damage: {0}\n", attackDamage);
             Console.Write("Press enter to continue...");
             Console.ReadLine();
+        }
+        public bool KilledOnce()
+        {
+            return killedOnce;
+        }
+        public void SeenOnce()
+        {
+            seenOnce = true;
+        }
+        public bool CheckSeenOnce()
+        {
+            return seenOnce;
+        }
+
+        public void SaveData(ref List<string> data)
+        {
+            data.Add(Exists().ToString());
+            data.Add(KilledOnce().ToString());
+            data.Add(CheckSeenOnce().ToString());
+        }
+        public void LoadData(string s, string t, string u)
+        {
+            exists = bool.Parse(s);
+            killedOnce = bool.Parse(t);
+            seenOnce = bool.Parse(u);
         }
 
         

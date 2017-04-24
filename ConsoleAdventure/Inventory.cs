@@ -40,6 +40,28 @@ namespace ConsoleAdventure
             Console.ReadLine();
         }
 
+        public float CheckProgressInvetory()
+        {
+            
+            float count = 0;
+            Console.WriteLine("\n_____ WEAPONS _____");
+            if (fork.WeaponStatus())
+                count++;
+            if (antler.WeaponStatus())
+                count++;
+            if (poisonSpear.WeaponStatus())
+                count++;
+            if (toxicSludgePistol.WeaponStatus())
+                count++;
+            if (guttingMachine.WeaponStatus())
+                count++;
+            if (battleshipCannon.WeaponStatus())
+                count++;
+            Console.WriteLine("{0}/6 weapons owned.\n", count);
+            return count;
+            
+        }
+
         
 
     }
