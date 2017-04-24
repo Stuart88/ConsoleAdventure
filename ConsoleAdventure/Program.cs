@@ -164,7 +164,7 @@ namespace ConsoleAdventure
                         break;
                     case "i am the most puny":
                         player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
-                        Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                        Console.WriteLine("Pity money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
                         Console.Write("Press enter to continue...");
                         Console.ReadLine();
                         break;
@@ -200,7 +200,7 @@ namespace ConsoleAdventure
                         Console.WriteLine("Battle: --------- Find battle!");
                         Console.WriteLine("Use health: ----- Use health pill.");
                         Console.WriteLine("Equip X: -------- Equip desired weapon.");
-                        Console.WriteLine("                  (Can enter full weapon name or numbers 1-6)");
+                        Console.WriteLine("                  (Can enter full weapon name or use numbers 1-6)");
                         Console.WriteLine("Shop: ----------- Enter shop");
                         Console.WriteLine("Add ammo: ------- Add ammo to current weapon.");
                         Console.WriteLine("Player info: ---- View player info.");
@@ -267,7 +267,7 @@ namespace ConsoleAdventure
                     {
                         case "i am the most puny":
                             player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
-                            Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                            Console.WriteLine("Pity money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
                             Console.Write("Press enter to continue...");
                             Console.ReadLine();
                             break;
@@ -561,7 +561,7 @@ namespace ConsoleAdventure
                                 break;
                         case "i am the most puny":
                             player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
-                            Console.WriteLine("Free money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
+                            Console.WriteLine("Pity money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
                             Console.Write("Press enter to continue...");
                             Console.ReadLine();
                             break;
@@ -765,9 +765,11 @@ namespace ConsoleAdventure
 
                         case "help":
                             Console.WriteLine("\n_____ Available Commands _____");
+                            Console.WriteLine("Some commands have shortcuts e.g. enter 'a' for attack\n");
                             Console.WriteLine("Attack: --------- Atack enemy using current weapon.");
                             Console.WriteLine("Use health: ----- Use health pill.");
                             Console.WriteLine("Equip X: -------- Equip desired weapon.");
+                            Console.WriteLine("                  (Can enter full weapon name or use numbers 1-6)");
                             Console.WriteLine("Add ammo: ------- Add ammo to current weapon.");
                             Console.WriteLine("Player info: ---- View player info.");
                             Console.WriteLine("Enemy info: ----- View enemy info.");

@@ -310,15 +310,18 @@ namespace ConsoleAdventure
                 switch (overwrite)
                 {
                     case "y":
+                    case "yes":
                         System.IO.StreamWriter file = new System.IO.StreamWriter(directory);
 
                         foreach (var t in data)
                         {
                             file.WriteLine(t);
                         }
+                        Console.WriteLine("Game saved to local directory.");
                         file.Close();
                         break;
                     case "n":
+                    case "no":
                         Console.WriteLine("Save aborted");
                         break;
                 }
@@ -330,10 +333,12 @@ namespace ConsoleAdventure
                 {
                     file.WriteLine(t);
                 }
+                
                 file.Close();
             }
-            Console.Write("Game saved. Press enter to continue...");
-            Console.ReadLine();
+
+
+ 
         }
 
         public void LoadGame(ref Inventory i, ref Enemy[] enemy, string s)
