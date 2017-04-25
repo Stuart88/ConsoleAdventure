@@ -12,8 +12,8 @@ namespace ConsoleAdventure
         public Weapon antler = new Weapon("Antler", 15, 1, false, false);
         public Weapon poisonSpear = new Weapon("Poison Spear", 40, 1, false, false);
         public Weapon toxicSludgePistol = new Weapon("Toxic Sludge Pistol", 60, 0, false, false);
-        public Weapon guttingMachine = new Weapon("Gutting Machine", 80, 1, false, false);
-        public Weapon battleshipCannon = new Weapon("Battleship Cannon", 100, 0, false, false);
+        public Weapon guttingMachine = new Weapon("Gutting Machine", 100, 1, false, false);
+        public Weapon antiGodGun = new Weapon("Anti-God Gun", 100, 0, false, false);
 
         public Item health = new Item("Health", 10, 0, 20);
         public Item ammo = new Item("Ammo", 1, 0, 1);
@@ -33,8 +33,8 @@ namespace ConsoleAdventure
                 Console.WriteLine("               {0}", toxicSludgePistol.GetWeaponName());
             if(guttingMachine.WeaponStatus())
                 Console.WriteLine("               {0}", guttingMachine.GetWeaponName());
-            if(battleshipCannon.WeaponStatus())
-                Console.WriteLine("               {0}", battleshipCannon.GetWeaponName());
+            if(antiGodGun.WeaponStatus())
+                Console.WriteLine("               {0}", antiGodGun.GetWeaponName());
             Console.WriteLine("Available weapon ammo: {0}\n", ammo.GetAmount());
             Console.Write("Press enter to continue...");
             Console.ReadLine();
@@ -55,7 +55,7 @@ namespace ConsoleAdventure
                 count++;
             if (guttingMachine.WeaponStatus())
                 count++;
-            if (battleshipCannon.WeaponStatus())
+            if (antiGodGun.WeaponStatus())
                 count++;
             Console.WriteLine("{0}/6 weapons owned.\n", count);
             return count;
@@ -77,7 +77,7 @@ namespace ConsoleAdventure
                 count++;
             if (guttingMachine.WeaponStatus())
                 count++;
-            if (battleshipCannon.WeaponStatus())
+            if (antiGodGun.WeaponStatus())
                 count++;
 
             return count;

@@ -42,13 +42,13 @@ namespace ConsoleAdventure
         }
         public bool UseWeapon()
         {
-            if (ammo < power && (name == "Toxic Sludge Pistol" || name == "Battleship Cannon"))
+            if (ammo < power && (name == "Toxic Sludge Pistol" || name == "Anti-God Gun"))
             {
                 return false;
             }
             else
             {
-                if(name == "Toxic Sludge Pistol" || name == "Battleship Cannon")
+                if(name == "Toxic Sludge Pistol" || name == "Anti-God Gun")
                     ammo -= power;
                 return true;
             }
@@ -105,7 +105,14 @@ namespace ConsoleAdventure
         {
             SetWeaponAmmo(int.Parse(s));
             SetWeaponStatus(bool.Parse(t));
-            available = bool.Parse(u);
+            selected = bool.Parse(u);
+        }
+
+        public void Reset()
+        {
+            available = false;
+            ammo = 0;
+            selected = false;
         }
     }
 }
