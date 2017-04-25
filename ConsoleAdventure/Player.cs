@@ -253,7 +253,7 @@ namespace ConsoleAdventure
                         Console.WriteLine("How much ammo would you like to add?");
                         Console.WriteLine("Current weapon ammo: {0}", selectedWeapon.GetWeaponAmmo());
                         Console.WriteLine("Available ammo: {0}", playerInventory.ammo.GetAmount());
-                        Console.WriteLine("(One shot of this weapon requires at least {1} ammo)", selectedWeapon.GetWeaponName(), selectedWeapon.Getpower() );
+                        Console.WriteLine("(One shot of this weapon requires at least {0} ammo)", selectedWeapon.Getpower() );
                         Console.Write("Enter value: ");
                         string input = Console.ReadLine().ToLower();
                         if (!int.TryParse(input, out ammoAdd))
