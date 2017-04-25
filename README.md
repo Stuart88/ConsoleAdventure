@@ -7,3 +7,5 @@ in the shop, after which point it should be possible to easily defeat all enemie
 ten types of enemy in total. More difficult enemies only start to appear after enough progress has been made.
 
 A first exercise in OOP and game logic. Made in a day.
+
+Executable file in ' ConsoleAdventure.rar. '
