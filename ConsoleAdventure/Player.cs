@@ -360,6 +360,9 @@ namespace ConsoleAdventure
             progress += i.UpdateProgressInvetory();
             progress = (progress / 16.0) * 100.0;
             this.progress = progress;
+            if (progress == 100)
+                gameComplete = true;
+            
         }
         public void CheckProgress(Inventory i, Enemy[] enemy)
         {
@@ -538,6 +541,7 @@ namespace ConsoleAdventure
                     Equip2(data[2]);
                     selectedWeapon.SetWeaponName(data[2]);
 
+                    UpdateProgress(i, enemy);
 
                     file.Close();
                     Console.WriteLine("\n_____ Game Loaded _____");

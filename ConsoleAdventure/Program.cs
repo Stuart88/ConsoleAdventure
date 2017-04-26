@@ -27,7 +27,7 @@ namespace ConsoleAdventure
             enemies[4] = new Enemy("Doom Turnip", 100, 100, 40);
             enemies[3] = new Enemy("Angry E.T.", 200, 200, 50);
             enemies[2] = new Enemy("United Kingdom", 300, 300, 60);
-            enemies[1] = new Enemy("Loneley Panzer Tank", 400, 400, 70);
+            enemies[1] = new Enemy("Lonely Panzer Tank", 400, 400, 70);
             enemies[0] = new Enemy("God On Acid", 500, 500, 80);
 
             Console.WriteLine(@"
@@ -39,7 +39,7 @@ namespace ConsoleAdventure
            ). , ( .   (  ) ( , ')  .' (  ,    )
           (_,) . ), ) _) _,')  (, ) '. )  ,. (' )
         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            Console.WriteLine("\n_______Welcome to the most epic adventure on Earth._______\n");
+            Console.WriteLine("\n_______ Welcome to the most epic adventure on Earth _______\n");
 
             GameStart();
 
@@ -51,6 +51,10 @@ namespace ConsoleAdventure
                 Console.Write("Type 'help' for available commands\nEnter command: ");
                 command = Console.ReadLine().ToLower();
                 Console.WriteLine("___________________________________");
+
+                if (player.progress == 100)
+                    gameComplete = true;
+
 
                 switch (command)
                 {
@@ -431,28 +435,72 @@ namespace ConsoleAdventure
                         Console.WriteLine("Inventory: ------ View inventory info.");
                         Console.WriteLine("Check progress: - Check game progress.");
 
-
-                        Console.WriteLine("\nLoad: ----------- Load a game.");
+                        Console.WriteLine("\nNew: ------------ New game.");
+                        Console.WriteLine("Load: ----------- Load a game.");
                         Console.WriteLine("Save: ----------- Save game.");
                         Console.WriteLine("Game info: ------ Display game information.");
-                        Console.WriteLine("Quit / Exit: ---- Exit game.\n");
+                        Console.WriteLine("Quit / Exit: ---- Exit game.");
                         break;
-                    case "quit":
-                    case "exit":
-                        Console.Write("\nReally quit? Y/N : ");
-                        switch (Console.ReadLine().ToLower())
+                    case "new":
+                        bool newgame = true;
+                        while(newgame)
                         {
-                            case "y":
-                            case "yes":
-                                playing = false;
-                                break;
-                            case "n":
-                            case "no":
-                                break;
+                            Console.Write("\nReset game? (Y/N)");
+                            switch (Console.ReadLine().ToLower())
+                            {
+                                default:
+                                    newgame = true;
+                                    break;
+                                case "y":
+                                    playing = true;
+                                    gameStart = true;
+                                    Reset();
+                                    newgame = false;
+                                    Console.WriteLine(@"
+                    (  .      )
+                )           (              )
+                      .  '   .   '  .  '  .
+             (    , )       (.   )  (   ',    )
+              .' ) ( . )    ,  ( ,     )   ( .
+           ). , ( .   (  ) ( , ')  .' (  ,    )
+          (_,) . ), ) _) _,')  (, ) '. )  ,. (' )
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                                    Console.WriteLine("\n_______ Welcome to the most epic adventure on Earth _______\n");
+
+                                    GameStart();
+                                    break;
+                                case "n":
+                                    newgame = false;
+                                    break;
+                            }
                         }
                         break;
 
-                        
+                    case "q":
+                    case "quit":
+                    case "exit":
+                        bool quitting = true;
+                        while (quitting)
+                        {
+                            Console.Write("\nReally quit game? Y/N : ");
+                            switch (Console.ReadLine().ToLower())
+                            {
+                                case "y":
+                                case "yes":
+                                    playing = false;
+                                    gameStart = false;
+                                    quitting = false;
+                                    break;
+                                case "n":
+                                case "no":
+                                    quitting = false;
+                                    break;
+                            }
+                        }
+
+                        break;
+
+
 
                 }
                 player.UpdateProgress(player.playerInventory, enemies);
@@ -784,20 +832,29 @@ namespace ConsoleAdventure
                                 Console.ReadLine();
                                 break;
                             }
+                        case "q":
                         case "quit":
                         case "exit":
-                            Console.Write("\nReally quit? Y/N : ");
-                            switch (Console.ReadLine().ToLower())
+                            bool quitting = true;
+                            while (quitting)
                             {
-                                case "y":
-                                case "yes":
-                                    inShop = false;
-                                    playing = false;
-                                    break;
-                                case "n":
-                                case "no":
-                                    break;
+                                Console.Write("\nReally quit game? Y/N : ");
+                                switch (Console.ReadLine().ToLower())
+                                {
+                                    case "y":
+                                    case "yes":
+                                        playing = false;
+                                        gameStart = false;
+                                        quitting = false;
+                                        inShop = false;
+                                        break;
+                                    case "n":
+                                    case "no":
+                                        quitting = false;
+                                        break;
+                                }
                             }
+
                             break;
                         case "leave":
                         case "leave shop":
@@ -839,6 +896,30 @@ namespace ConsoleAdventure
                             default:
                                 Console.WriteLine("\nStop talking nonsense, you're under attack!\n");
                                 break;
+                        case "q":
+                        case "quit":
+                        case "exit":
+                            bool quitting = true;
+                            while (quitting)
+                            {
+                                Console.Write("\nReally quit game? Y/N : ");
+                                switch (Console.ReadLine().ToLower())
+                                {
+                                    case "y":
+                                    case "yes":
+                                        playing = false;
+                                        gameStart = false;
+                                        quitting = false;
+                                        fighting = false;
+                                        break;
+                                    case "n":
+                                    case "no":
+                                        quitting = false;
+                                        break;
+                                }
+                            }
+
+                            break;
                         case "i am the most puny":
                             player.playerInventory.money.SetAmount(player.playerInventory.money.GetAmount() + 1000);
                             Console.WriteLine("Pity money granted. Available money: £{0}", player.playerInventory.money.GetAmount());
@@ -961,6 +1042,8 @@ namespace ConsoleAdventure
                             if (player.playerInventory.ammo.GetAmount() == 0)
                             {
                                 Console.WriteLine("\nNo ammo left!\n");
+                                Console.Write("Press enter to continue...");
+                                Console.ReadLine();
                                 break;
                             }
                             else
@@ -1151,19 +1234,27 @@ namespace ConsoleAdventure
                             Console.ReadLine();
                             break;
                         case "q":
+                        case "quit":
                         case "exit":
-                            Console.Write("\nReally quit? Y/N : ");
-                            switch (Console.ReadLine().ToLower())
+                            bool quitting = true;
+                            while(quitting)
                             {
-                                case "y":
-                                case "yes":
-                                    playing = false;
-                                    gameStart = false;
-                                    break;
-                                case "n":
-                                case "no":
-                                    break;
+                                Console.Write("\nReally quit game? Y/N : ");
+                                switch (Console.ReadLine().ToLower())
+                                {
+                                    case "y":
+                                    case "yes":
+                                        playing = false;
+                                        gameStart = false;
+                                        quitting = false;
+                                        break;
+                                    case "n":
+                                    case "no":
+                                        quitting = false;
+                                        break;
+                                }
                             }
+                            
                             break;
 
                     }
@@ -1191,6 +1282,8 @@ namespace ConsoleAdventure
                 player.playerInventory.toxicSludgePistol.Reset();
                 player.playerInventory.guttingMachine.Reset();
                 player.playerInventory.antiGodGun.Reset();
+
+                player.Equip2("Fork");
             }
         }
       
